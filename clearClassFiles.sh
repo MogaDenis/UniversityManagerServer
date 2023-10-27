@@ -1,0 +1,1 @@
+find source -type f -name "*.class" -delete
