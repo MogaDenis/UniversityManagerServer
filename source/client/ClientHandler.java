@@ -1,6 +1,7 @@
 package source.client;
 
 import java.util.ArrayList;
+import java.util.Vector;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import source.controller.Controller;
+import source.model.student.Student;
 
 public class ClientHandler implements Runnable {
     private Socket socket;
@@ -15,6 +17,11 @@ public class ClientHandler implements Runnable {
     private BufferedWriter bufferedWriter;
     private ArrayList<String> mainMenu;
     private Controller controller;
+
+    public static String breakConnection = "0";
+    public static String showStudents = "1";
+    public static String showTeachers = "2";
+    public static String showSubjects = "3";
 
     private ArrayList<String> getMainMenuList() 
     {
@@ -94,10 +101,17 @@ public class ClientHandler implements Runnable {
                 String clientChoice = this.bufferedReader.readLine();
                 System.out.println(clientChoice);
 
-                if (clientChoice.equals(String.valueOf(0))) 
+                if (clientChoice.equals(breakConnection)) 
                 {
                     this.closeConnection();
                     break;
+                }
+                else if (clientChoice.equals(showStudents))
+                {
+                    Vector<Student> students = this.controller.getStudents();
+                    this.sendStringToClient(String.valueOf(students.size())); // Send the number of students. 
+                    for (Student student : students)
+                        this.sendStringToClient(student.toString());
                 }
 
                 this.sendStringToClient("answer");;

@@ -8,6 +8,11 @@ public class SubjectsRepository implements Repository<Subject>
 {
     private Vector<Subject> subjects;
 
+    public SubjectsRepository()
+    {
+        this.subjects = new Vector<>();
+    }
+
     public Boolean addElement(Subject subject)
     {
         return this.subjects.add(subject);

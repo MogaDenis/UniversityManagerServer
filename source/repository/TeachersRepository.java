@@ -8,6 +8,11 @@ public class TeachersRepository implements Repository<Teacher>
 {
     private Vector<Teacher> teachers;
 
+    public TeachersRepository()
+    {
+        this.teachers = new Vector<>();
+    }
+
     public Boolean addElement(Teacher teacher)
     {
         return this.teachers.add(teacher);

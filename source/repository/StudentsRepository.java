@@ -7,6 +7,11 @@ public class StudentsRepository implements Repository<Student>
 {
     private Vector<Student> students;
 
+    public StudentsRepository()
+    {
+        this.students = new Vector<>();
+    }
+
     public Boolean addElement(Student student)
     {
         return this.students.add(student);

@@ -31,6 +31,14 @@ public class Server
         this.controller = new Controller(students, teachers, subjects);
     }
 
+    private void populateRepository()
+    {
+        this.controller.addStudent(new Student("Denis", 1));
+        this.controller.addStudent(new Student("Andrei", 2));
+        this.controller.addTeacher(new Teacher("Teacher1", 1));
+        this.controller.addSubject(new Subject("DSA", 1));
+    }
+
     private void closeConnection()
     {
         try
@@ -46,6 +54,8 @@ public class Server
 
     public void startServer()
     {
+        this.populateRepository();
+
         try 
         {
             System.out.println("Server started\n");

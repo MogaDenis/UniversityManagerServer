@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
+
+import source.model.student.Student;
 
 public class Client 
 {
@@ -35,10 +39,17 @@ public class Client
         }
     }
 
-    private void printArrayList(ArrayList<?> arrayList)
+    private void printList(List<?> list)
     {
-        for (Object object : arrayList)
+        for (Object object : list)
             System.out.println(object.toString());
+    }
+
+    private void sendStringToServer(String string) throws IOException
+    {
+        this.bufferedWriter.write(String.valueOf(string));
+        this.bufferedWriter.newLine();
+        this.bufferedWriter.flush();
     }
 
     private void execute()
@@ -57,22 +68,29 @@ public class Client
 
             while (this.socket.isClosed() == false)
             {
-                this.printArrayList(mainMenuList);
+                this.printList(mainMenuList);
 
                 System.out.print("\n>> ");
 
                 String choice = this.scanner.nextLine();
+                this.sendStringToServer(choice);
 
-                this.bufferedWriter.write(choice);
-                this.bufferedWriter.newLine();
-                this.bufferedWriter.flush();
-
-                String answer = this.bufferedReader.readLine();
-
-                if (answer == null)
+                if (choice.equals(ClientHandler.breakConnection))
+                {
                     break;
+                }
+                else if (choice.equals(ClientHandler.showStudents))
+                {
+                    Integer studentsCount = Integer.parseInt(this.bufferedReader.readLine());
+                    Vector<String> students = new Vector<>();
+                    for (int i = 0; i < studentsCount; i++)
+                    {
+                        String currentStudent = this.bufferedReader.readLine();
+                        students.add(currentStudent);
+                    }
 
-                System.out.println(answer);
+                    this.printList(students);
+                }
             }
         }
         catch (IOException e)
