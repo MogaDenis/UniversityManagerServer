@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
-import source.model.student.Student;
-
 public class Client 
 {
     private Socket socket;
@@ -52,6 +50,20 @@ public class Client
         this.bufferedWriter.flush();
     }
 
+    private Vector<String> receiveVectorFromServer() throws IOException
+    {
+        Integer vectorLength = Integer.parseInt(this.bufferedReader.readLine());
+        Vector<String> vector = new Vector<>();
+
+        for (int i = 0; i < vectorLength; i++)
+        {
+            String currentElement = this.bufferedReader.readLine();
+            vector.add(currentElement);
+        }
+
+        return vector;
+    }
+
     private void execute()
     {
         try 
@@ -79,17 +91,11 @@ public class Client
                 {
                     break;
                 }
-                else if (choice.equals(ClientHandler.showStudents))
+                else if (choice.equals(ClientHandler.showStudents) || choice.equals(ClientHandler.showTeachers) || 
+                        choice.equals(ClientHandler.showSubjects))
                 {
-                    Integer studentsCount = Integer.parseInt(this.bufferedReader.readLine());
-                    Vector<String> students = new Vector<>();
-                    for (int i = 0; i < studentsCount; i++)
-                    {
-                        String currentStudent = this.bufferedReader.readLine();
-                        students.add(currentStudent);
-                    }
-
-                    this.printList(students);
+                    Vector<String> entities = this.receiveVectorFromServer();
+                    this.printList(entities);
                 }
             }
         }
@@ -119,11 +125,18 @@ public class Client
         } 
     }
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
-        Socket socket = new Socket("localhost", 1234);
-        Client client = new Client(socket);
+        try 
+        {
+            Socket socket = new Socket("localhost", 1234);
+            Client client = new Client(socket);
 
-        client.execute();
+            client.execute();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import source.controller.Controller;
 import source.model.student.Student;
+import source.model.subject.Subject;
+import source.model.teacher.Teacher;
 
 public class ClientHandler implements Runnable {
     private Socket socket;
@@ -22,6 +24,9 @@ public class ClientHandler implements Runnable {
     public static String showStudents = "1";
     public static String showTeachers = "2";
     public static String showSubjects = "3";
+    public static String addStudent = "4";
+    public static String addTeacher = "5";
+    public static String addSubject = "6";
 
     private ArrayList<String> getMainMenuList() 
     {
@@ -84,6 +89,13 @@ public class ClientHandler implements Runnable {
         this.bufferedWriter.flush();
     }
 
+    private void sendVectorToClient(Vector<?> vector) throws IOException
+    {
+        this.sendStringToClient(String.valueOf(vector.size()));
+        for (Object object : vector)
+            this.sendStringToClient(object.toString());
+    }
+
     @Override
     public void run() 
     {
@@ -99,7 +111,6 @@ public class ClientHandler implements Runnable {
             while (this.socket.isClosed() == false) 
             {
                 String clientChoice = this.bufferedReader.readLine();
-                System.out.println(clientChoice);
 
                 if (clientChoice.equals(breakConnection)) 
                 {
@@ -109,12 +120,19 @@ public class ClientHandler implements Runnable {
                 else if (clientChoice.equals(showStudents))
                 {
                     Vector<Student> students = this.controller.getStudents();
-                    this.sendStringToClient(String.valueOf(students.size())); // Send the number of students. 
-                    for (Student student : students)
-                        this.sendStringToClient(student.toString());
-                }
 
-                this.sendStringToClient("answer");;
+                    this.sendVectorToClient(students);
+                }
+                else if (clientChoice.equals(showTeachers))
+                {
+                    Vector<Teacher> teachers = this.controller.getTeachers();
+                    this.sendVectorToClient(teachers);
+                }
+                else if (clientChoice.equals(showSubjects))
+                {
+                    Vector<Subject> subjects = this.controller.getSubjects();
+                    this.sendVectorToClient(subjects);
+                }
             }
         } 
         catch (IOException e) 
