@@ -33,8 +33,8 @@ public class Server
 
     private void populateRepository()
     {
-        this.controller.addStudent(new Student("Denis", 1));
-        this.controller.addStudent(new Student("Andrei", 2));
+        this.controller.addStudent(new Student("Denis", 1, 1));
+        this.controller.addStudent(new Student("Andrei", 2, 1));
         this.controller.addTeacher(new Teacher("Teacher1", 1));
         this.controller.addSubject(new Subject("DSA", 1));
     }

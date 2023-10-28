@@ -8,6 +8,13 @@ public class Teacher
     private String name;
     private HashSet<Integer> subjectsIDs;  
 
+    public Teacher()
+    {
+        this.name = null;
+        this.ID = null;
+        this.subjectsIDs = new HashSet<>();
+    }
+
     public Teacher(String name, Integer ID)
     {
         this.name = name;

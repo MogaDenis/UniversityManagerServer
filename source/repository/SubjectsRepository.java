@@ -15,6 +15,9 @@ public class SubjectsRepository implements Repository<Subject>
 
     public Boolean addElement(Subject subject)
     {
+        if (this.subjects.contains(subject))
+            return false;
+
         return this.subjects.add(subject);
     }
 

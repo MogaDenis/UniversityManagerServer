@@ -14,6 +14,9 @@ public class StudentsRepository implements Repository<Student>
 
     public Boolean addElement(Student student)
     {
+        if (this.students.contains(student))
+            return false;
+
         return this.students.add(student);
     }
 

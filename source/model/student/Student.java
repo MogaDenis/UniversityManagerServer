@@ -4,7 +4,14 @@ public class Student
 {
     private String name;
     private Integer ID;
-    private Integer groupID;    
+    private Integer groupID;   
+    
+    public Student()
+    {
+        this.name = null;
+        this.ID = null;
+        this.groupID = null;
+    }
 
     public Student(String name, Integer ID, Integer groupID)
     {

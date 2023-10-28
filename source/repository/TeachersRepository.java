@@ -15,6 +15,9 @@ public class TeachersRepository implements Repository<Teacher>
 
     public Boolean addElement(Teacher teacher)
     {
+        if (this.teachers.contains(teacher))
+            return false;
+
         return this.teachers.add(teacher);
     }
 

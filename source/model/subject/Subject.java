@@ -4,6 +4,12 @@ public class Subject
 {
     private Integer ID;
     private String name;
+
+    public Subject()
+    {
+        this.name = null;
+        this.ID = null;
+    }
     
     public Subject(String name, Integer ID)
     {

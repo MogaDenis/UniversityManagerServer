@@ -39,6 +39,8 @@ public class Client
 
     private void printList(List<?> list)
     {
+        System.out.print("\n");
+
         for (Object object : list)
             System.out.println(object.toString());
     }
@@ -64,12 +66,37 @@ public class Client
         return vector;
     }
 
+    private void readStudentDataAndSendToServer() throws IOException
+    {
+        System.out.print("Name: ");
+        String studentName = this.scanner.nextLine();
+        this.sendStringToServer(studentName);
+
+        System.out.print("ID(integer): ");
+        String studentID = this.scanner.nextLine();
+        this.sendStringToServer(studentID);
+
+        System.out.print("Group ID(integer): ");
+        String groupID = this.scanner.nextLine();
+        this.sendStringToServer(groupID);
+    }
+
+    private void readNameAndIDAndSendToServer() throws IOException
+    {
+        System.out.print("Name: ");
+        String name = this.scanner.nextLine();
+        this.sendStringToServer(name);
+
+        System.out.print("ID(integer): ");
+        String id = this.scanner.nextLine();
+        this.sendStringToServer(id);
+    }
+
     private void execute()
     {
         try 
         {
-            String menuSizeString = this.bufferedReader.readLine();
-                
+            String menuSizeString = this.bufferedReader.readLine();   
             Integer menuSize = Integer.parseInt(menuSizeString);
 
             for (int i = 0; i < menuSize; i++)
@@ -96,6 +123,18 @@ public class Client
                 {
                     Vector<String> entities = this.receiveVectorFromServer();
                     this.printList(entities);
+                }
+                else if (choice.equals(ClientHandler.addStudent))
+                {
+                    this.readStudentDataAndSendToServer();
+                }
+                else if (choice.equals(ClientHandler.addTeacher))
+                {
+                    this.readNameAndIDAndSendToServer();
+                }
+                else if (choice.equals(ClientHandler.addSubject))
+                {
+                    this.readNameAndIDAndSendToServer();
                 }
             }
         }

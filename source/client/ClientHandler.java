@@ -96,6 +96,26 @@ public class ClientHandler implements Runnable {
             this.sendStringToClient(object.toString());
     }
 
+    private Student getStudentDataFromUser() throws IOException
+    {
+        String studentName = this.bufferedReader.readLine();
+        Integer studentID = Integer.parseInt(this.bufferedReader.readLine());
+        Integer groupID = Integer.parseInt(this.bufferedReader.readLine());
+
+        return new Student(studentName, studentID, groupID);
+    }
+
+    private Object getNameAndIDFromUser(Object object) throws IOException
+    {
+        String name = this.bufferedReader.readLine();
+        Integer id = Integer.parseInt(this.bufferedReader.readLine());
+
+        if (object instanceof Teacher)
+            return new Teacher(name, id);
+
+        return new Subject(name, id);
+    }
+
     @Override
     public void run() 
     {
@@ -120,7 +140,6 @@ public class ClientHandler implements Runnable {
                 else if (clientChoice.equals(showStudents))
                 {
                     Vector<Student> students = this.controller.getStudents();
-
                     this.sendVectorToClient(students);
                 }
                 else if (clientChoice.equals(showTeachers))
@@ -132,6 +151,21 @@ public class ClientHandler implements Runnable {
                 {
                     Vector<Subject> subjects = this.controller.getSubjects();
                     this.sendVectorToClient(subjects);
+                }
+                else if (clientChoice.equals(addStudent))
+                {
+                    Student newStudent = this.getStudentDataFromUser();
+                    this.controller.addStudent(newStudent);
+                }
+                else if (clientChoice.equals(addTeacher))
+                {
+                    Teacher newTeacher = (Teacher)this.getNameAndIDFromUser(new Teacher());
+                    this.controller.addTeacher(newTeacher);
+                }
+                else if (clientChoice.equals(addSubject))
+                {
+                    Subject newSubject = (Subject)this.getNameAndIDFromUser(new Subject());
+                    this.controller.addSubject(newSubject);
                 }
             }
         } 
