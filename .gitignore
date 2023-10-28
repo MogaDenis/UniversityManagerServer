@@ -1,2 +1,2 @@
 *.class
-clearClassFiles.sh
+deleteClassFiles.sh
