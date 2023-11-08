@@ -2,7 +2,9 @@ package source.model.teacher;
 
 import java.util.HashSet;
 
-public class Teacher 
+import source.model.copyable.Copyable;
+
+public class Teacher implements Copyable<Teacher>
 {
     private Integer ID;
     private String name;
@@ -29,6 +31,13 @@ public class Teacher
         this.subjectsIDs = new HashSet<>(subjectsIDs);
     }
 
+    public Teacher(Integer ID)
+    {
+        this.name = null;
+        this.subjectsIDs = new HashSet<>();
+        this.ID = ID;
+    }
+
     @Override
     public boolean equals(Object object)
     {
@@ -41,6 +50,12 @@ public class Teacher
         Teacher teacher = (Teacher)object;
 
         return this.ID == teacher.ID;
+    }
+
+    @Override
+    public Teacher deepCopy()
+    {
+        return new Teacher(this.name, this.ID, this.subjectsIDs);
     }
 
     public Integer getID()

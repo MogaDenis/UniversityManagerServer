@@ -1,6 +1,8 @@
 package source.model.student;
 
-public class Student 
+import source.model.copyable.Copyable;
+
+public class Student implements Copyable<Student>
 {
     private String name;
     private Integer ID;
@@ -27,6 +29,13 @@ public class Student
         this.groupID = null;
     }
 
+    public Student(Integer ID)
+    {
+        this.name = null;
+        this.groupID = null;
+        this.ID = ID;
+    }
+
     @Override
     public boolean equals(Object object)
     {
@@ -41,6 +50,12 @@ public class Student
         return this.ID == student.ID;
     }
 
+    @Override
+    public Student deepCopy()
+    {
+        return new Student(this.name, this.ID, this.groupID);
+    }
+
     public String getName()
     {
         return this.name;
@@ -51,7 +66,7 @@ public class Student
         return this.ID;
     }
 
-    public Integer groupID()
+    public Integer getGroupID()
     {
         return this.groupID;
     }

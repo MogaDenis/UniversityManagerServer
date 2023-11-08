@@ -27,6 +27,10 @@ public class ClientHandler implements Runnable {
     public static String addStudent = "4";
     public static String addTeacher = "5";
     public static String addSubject = "6";
+    public static String removeStudent = "7";
+    public static String removeTeacher = "8";
+    public static String removeSubject = "9";
+    public static String filterStudents = "10";
 
     private ArrayList<String> getMainMenuList() 
     {
@@ -38,6 +42,10 @@ public class ClientHandler implements Runnable {
         mainMenu.add("4 - Add a student.");
         mainMenu.add("5 - Add a teacher.");
         mainMenu.add("6 - Add a subject.");
+        mainMenu.add("7 - Remove a student.");
+        mainMenu.add("8 - Remove a teacher.");
+        mainMenu.add("9 - Remove a subject.");
+        mainMenu.add("10 - Filter students by group.");
         mainMenu.add("0 - Close the application.");
 
         return mainMenu;
@@ -105,6 +113,11 @@ public class ClientHandler implements Runnable {
         return new Student(studentName, studentID, groupID);
     }
 
+    private Integer getEntityIDFromUser() throws IOException
+    {
+        return Integer.parseInt(this.bufferedReader.readLine());
+    }
+
     private Object getNameAndIDFromUser(Object object) throws IOException
     {
         String name = this.bufferedReader.readLine();
@@ -166,6 +179,27 @@ public class ClientHandler implements Runnable {
                 {
                     Subject newSubject = (Subject)this.getNameAndIDFromUser(new Subject());
                     this.controller.addSubject(newSubject);
+                }
+                else if (clientChoice.equals(removeStudent))
+                {
+                    Integer studentID = this.getEntityIDFromUser();
+                    this.controller.removeStudent(studentID);
+                }
+                else if (clientChoice.equals(removeTeacher))
+                {
+                    Integer teacherID = this.getEntityIDFromUser();
+                    this.controller.removeTeacher(teacherID);
+                }
+                else if (clientChoice.equals(removeSubject))
+                {
+                    Integer subjectID = this.getEntityIDFromUser();
+                    this.controller.removeSubject(subjectID);
+                }
+                else if (clientChoice.equals(filterStudents))
+                {
+                    Integer groupID = this.getEntityIDFromUser();
+                    Vector<Student> filteredStudents = this.controller.filterStudentsByGroup(groupID);
+                    this.sendVectorToClient(filteredStudents);
                 }
             }
         } 

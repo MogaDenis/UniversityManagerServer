@@ -26,6 +26,11 @@ public class TeachersRepository implements Repository<Teacher>
         return this.teachers.remove(teacher);
     }
 
+    public Boolean removeElementByID(Integer ID)
+    {
+        return this.teachers.remove(new Teacher(ID));
+    }
+
     public Integer size()
     {
         return this.teachers.size();
@@ -36,9 +41,15 @@ public class TeachersRepository implements Repository<Teacher>
         return this.teachers.isEmpty();
     }
 
+    @Override
     public Vector<Teacher> getAll()
     {
-        return new Vector<Teacher>(this.teachers);
+        Vector<Teacher> teachersCopy = new Vector<>();
+
+        for (Teacher teacher : this.teachers)
+            teachersCopy.add(teacher.deepCopy());
+
+        return teachersCopy;
     }
 
     @Override

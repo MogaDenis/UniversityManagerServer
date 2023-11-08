@@ -6,6 +6,7 @@ public interface Repository<T>
 {
     public Boolean addElement(T element);
     public Boolean removeElement(T element);
+    public Boolean removeElementByID(Integer ID);
     public Integer size();
     public Boolean isEmpty();
     public Vector<T> getAll();

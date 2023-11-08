@@ -1,7 +1,6 @@
 package source.repository;
 
 import java.util.Vector;
-
 import source.model.subject.Subject;
 
 public class SubjectsRepository implements Repository<Subject>
@@ -26,6 +25,11 @@ public class SubjectsRepository implements Repository<Subject>
         return this.subjects.remove(subject);
     }
 
+    public Boolean removeElementByID(Integer ID)
+    {
+        return this.subjects.remove(new Subject(ID));
+    }
+
     public Integer size()
     {
         return this.subjects.size();
@@ -36,9 +40,15 @@ public class SubjectsRepository implements Repository<Subject>
         return this.subjects.isEmpty();
     }
 
+    @Override
     public Vector<Subject> getAll()
     {
-        return new Vector<Subject>(this.subjects);
+        Vector<Subject> subjectsCopy = new Vector<>();
+
+        for (Subject subject : this.subjects)
+            subjectsCopy.add(subject.deepCopy());
+
+        return subjectsCopy;
     }
 
     @Override

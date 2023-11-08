@@ -92,6 +92,13 @@ public class Client
         this.sendStringToServer(id);
     }
 
+    private void readIDAndSendToServer() throws IOException
+    {
+        System.out.print("ID: ");
+        String ID = this.scanner.nextLine();
+        this.sendStringToServer(ID);
+    }
+
     private void execute()
     {
         try 
@@ -128,14 +135,45 @@ public class Client
                 {
                     this.readStudentDataAndSendToServer();
                 }
-                else if (choice.equals(ClientHandler.addTeacher))
+                else if (choice.equals(ClientHandler.removeStudent) || choice.equals(ClientHandler.removeTeacher) || 
+                        choice.equals(ClientHandler.removeSubject))
+                {
+                    this.readIDAndSendToServer();
+                }
+                else if (choice.equals(ClientHandler.filterStudents))
+                {
+                    this.readIDAndSendToServer();
+                    Vector<String> entities = this.receiveVectorFromServer();
+                    this.printList(entities);
+                }
+                else 
                 {
                     this.readNameAndIDAndSendToServer();
                 }
-                else if (choice.equals(ClientHandler.addSubject))
-                {
-                    this.readNameAndIDAndSendToServer();
-                }
+                // else if (choice.equals(ClientHandler.addStudent))
+                // {
+                //     this.readStudentDataAndSendToServer();
+                // }
+                // else if (choice.equals(ClientHandler.addTeacher))
+                // {
+                //     this.readNameAndIDAndSendToServer();
+                // }
+                // else if (choice.equals(ClientHandler.addSubject))
+                // {
+                //     this.readNameAndIDAndSendToServer();
+                // }
+                // else if (choice.equals(ClientHandler.removeStudent))
+                // {
+                //     this.readStudentDataAndSendToServer();
+                // }
+                // else if (choice.equals(ClientHandler.removeTeacher))
+                // {
+                //     this.readNameAndIDAndSendToServer();
+                // }
+                // else if (choice.equals(ClientHandler.removeSubject))
+                // {
+                //     this.readNameAndIDAndSendToServer();
+                // }
             }
         }
         catch (IOException e)

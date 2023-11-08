@@ -26,6 +26,18 @@ public class Controller
         return this.studentsRepository.getAll();
     }
 
+    public Vector<Student> filterStudentsByGroup(Integer groupID)
+    {
+        Vector<Student> filteredStudents = new Vector<>();
+        Vector<Student> allStudents = this.studentsRepository.getAll();
+
+        for (Student student : allStudents)
+            if (student.getGroupID() == groupID)
+                filteredStudents.add(student);
+
+        return filteredStudents;
+    }
+
     public Vector<Teacher> getTeachers()
     {
         return this.teachersRepository.getAll();
@@ -41,14 +53,44 @@ public class Controller
         return this.studentsRepository.addElement(student);
     }
 
+    public Boolean removeStudent(Student student)
+    {
+        return this.studentsRepository.removeElement(student);
+    }
+
+    public Boolean removeStudent(Integer ID)
+    {
+        return this.studentsRepository.removeElementByID(ID);
+    }
+
     public Boolean addTeacher(Teacher teacher)
     {
         return this.teachersRepository.addElement(teacher);
     }
 
+    public Boolean removeTeacher(Teacher teacher)
+    {
+        return this.teachersRepository.removeElement(teacher);
+    }
+
+    public Boolean removeTeacher(Integer ID)
+    {
+        return this.teachersRepository.removeElementByID(ID);
+    }
+
     public Boolean addSubject(Subject subject)
     {
         return this.subjectsRepository.addElement(subject);
+    }
+
+    public Boolean removeSubject(Subject subject)
+    {
+        return this.subjectsRepository.removeElement(subject);
+    }
+
+    public Boolean removeSubject(Integer ID)
+    {
+        return this.subjectsRepository.removeElementByID(ID);
     }
 
     public String getStudentsString()

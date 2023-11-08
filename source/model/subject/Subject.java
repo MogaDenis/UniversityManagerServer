@@ -1,6 +1,8 @@
 package source.model.subject;
 
-public class Subject 
+import source.model.copyable.Copyable;
+
+public class Subject implements Copyable<Subject>
 {
     private Integer ID;
     private String name;
@@ -17,6 +19,12 @@ public class Subject
         this.ID = ID;
     }
 
+    public Subject(Integer ID)
+    {
+        this.name = null;
+        this.ID = ID;
+    }
+
     @Override
     public boolean equals(Object object)
     {
@@ -29,6 +37,12 @@ public class Subject
         Subject subject = (Subject)object;
 
         return this.ID == subject.ID;
+    }
+
+    @Override
+    public Subject deepCopy()
+    {
+        return new Subject(this.name, this.ID);
     }
 
     public Integer getID()
